@@ -1,0 +1,65 @@
+<html>
+<head>
+</head>
+<body bgcolor=#7DAFE1 background=star.gif bgproperties="fixed">
+<LINK rel="stylesheet" type="text/css" href="style2.css">
+<img src=floor.gif width=1500 height=30 style="position:absolute;top:216px;left:0px">
+<div id=start><input type=button class=but value=Commencer onclick="play();document.getElementById('start').style.visibility='hidden';"></div>
+<script src=lev1.js></script>
+<script>
+for(i=0;i<=74;i++){
+if (mat[i]!=300){
+document.write('<img src=floor2.gif style="position:absolute;top:'+mat[i]+'px;left:'+i*20+'px">');}
+if (crocs[i]==301){
+crocs[i]=mat[i]-24;
+document.write('<img src=fin.gif style="position:absolute;top:'+crocs[i]+'px;left:'+i*20+'px">');
+crocs[i]=301;}
+if ((crocs[i]!=300)&&(crocs[i]!=301)){
+crocs[i]-=11;
+document.write('<img src=croco.gif style="position:absolute;top:'+crocs[i]+'px;left:'+i*20+'px">');}}
+</script>
+<div id=hero style="position:absolute;top:170px;left:40px;"><img src=hero0.gif></div>
+<script>
+
+/* Copyright LiBe444 */
+
+x=40;pos=0;dx=0;dy=0;t=-50;y=170;sign='';
+document.onkeydown  = getKeystart;
+document.onkeyup    = getKeyend;
+function play(){                
+if (t!=-50){t++;dy-=t;
+}
+if ((y-dy>=mat[Math.round(x/20)]-37)&&(y-dy<=mat[Math.round(x/20)]-27))
+{
+t=-50;dy=0;y=mat[Math.round(x/20)]-34;
+}
+else
+{
+if ((y-dy<mat[Math.round(x/20)]-37)&&(t==-50)){t=1;
+}
+if ((y-dy>mat[Math.round(x/20)]-27)&&(t==-50))
+{
+t=1;
+}}
+if(Math.abs(dx)==5){x+=dx;if (pos==1){pos=0;if (dx==5){sign='';}else{sign='1';}document.getElementById('hero').innerHTML='<img src=hero'+sign+'0.gif>';}else{pos=1;document.getElementById('hero').innerHTML='<img src=hero'+sign+'1.gif>';}}document.getElementById('hero').style.left=x;document.getElementById('hero').style.top=y-dy;window.scrollTo(x-200,0);if (x>=1480){alert('Bravo! tu as gagné ce niveau !');this.location='moby2.htm';}else{if ((t==-50)&&(crocs[Math.round(x/20)]!=300)&&(crocs[Math.round(x/20)]!=301)||(y-dy>200)){alert('Tu as perdu !');x=40;pos=0;dx=0;dy=0;t=-50;y=170;sign='';window.scrollTo(0,0);}setTimeout("play()",50);}}
+function getKeystart(keyStroke)    {
+
+isNetscape=(document.getElementById && !document.all);
+touche = (isNetscape) ? keyStroke.which : event.keyCode;
+if ((touche==37))
+{dx=-5;}
+if ((touche==39))
+{dx=5;}
+if ((touche==38) && (t==-50)){t=-12;}
+}
+
+function getKeyend(keyStroke)    {  
+isNetscape=(document.getElementById && !document.all);
+touche = (isNetscape) ? keyStroke.which : event.keyCode;
+if ((touche==37))
+{dx=0;}
+if ((touche==39))
+{dx=0;}
+}
+</script>
+</html>
